@@ -8,6 +8,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -22,19 +23,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: PROJEOMER
+all: Proje
 
 # Tool invocations
-PROJEOMER: $(OBJS) $(USER_OBJS)
+Proje: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "PROJEOMER" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "Proje" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) PROJEOMER
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) Proje
 	-@echo ' '
 
 .PHONY: all clean dependents

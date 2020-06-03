@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CFLAGS="-O2 -g"
+CC=gcc
+pushd src
+$CC -Wall $CFLAGS features.c list.c signature.c test.c -o ../test
+$CC -Wall $CFLAGS -DWITH_UTHASH=1 features.c list.c signature.c test.c -o ../test_hash
+$CC -Wall $CFLAGS features.c list.c signature.c main.c -o ../main
+$CC -Wall $CFLAGS -DWITH_UTHASH=1 features.c list.c signature.c main.c -o ../main_hash
+popd
+
+

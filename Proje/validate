@@ -1,0 +1,29 @@
+#!/bin/bash
+
+for f in sha1sum; do
+    P=`which $f`
+    if [[ ! -x $P ]]; then
+        echo "Depodan $f paketini yuklemeniz gerekiyor."
+        exit 1
+    fi
+done
+
+if [[ ! -f "./main" ]]; then
+    ./build
+fi
+
+
+mkdir results
+for i in $(ls -Sr kitap/*.txt); do
+    echo -n "Kitap $i test (bagli liste) ediliyor..."
+    FILE=$(basename ${i})
+    ./main "kitap/${FILE}" 1> results/$FILE.results
+    RES=$(sha1sum results/$FILE.results $i.results | awk '{ print $1 }' | sort -u | wc -l)
+    if [[ "x$RES" == "x1" ]]; then
+        echo "OK!"
+    else
+        echo "FAIL!"
+    fi
+done
+rm -rf results
+
