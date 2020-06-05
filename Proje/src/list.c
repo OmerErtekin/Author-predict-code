@@ -6,6 +6,20 @@
 #define KATSAYI 31
 #define TABLOBOYU 7919
 
+void hash_free(struct node** table){
+	struct node* wp = NULL, *p = NULL;
+	int i;
+	for(i=0;i<TABLOBOYU+1;i++){
+		wp = table[i];
+		while(wp){
+			p = wp;
+			wp = wp->next;
+			free(p->word);
+			free(p);
+		}
+	}
+}
+
 unsigned long hash_compute(const char* str){
 	unsigned long hash = 0;
 	while(*str){
@@ -17,32 +31,37 @@ unsigned long hash_compute(const char* str){
 
 
 
+
 struct node* add_word(struct node **list, char *word) {
-  		struct node *current = NULL;
-   	 int hash_code = hash_compute(word);
-		 struct node *result = list[hash_code];
+	struct node *current = NULL;
+	struct node *tmp = NULL;
 
-		  		for(current = result;current != NULL;current = current->next){
-		  		    if(strcmp(current->word,word) == 0){
-		  		      	    return current;
-		  		      	      }
-		  		      	      	}
 
-		  			current = (struct node*) malloc(sizeof(struct node));
-		  		    if(current){
-		  		      	    current->count = 0;
-		  		      	    current->word = strdup(word);
-		  		      	    current->next = result;
-		  		      	    list[hash_code] = current;
-		  		      	    return current;
+  	 int hash_code = hash_compute(word);
+			 struct node *result = list[hash_code];
 
-		  		      	 }
+			  		for(current = result;current != NULL;current = current->next){
+			  		    if(strcmp(current->word,word) == 0){
+			  		      	    return current;
+			  		      	      }
+			  		      	    }
 
-		  		      	 return NULL;
+			  			current = malloc(sizeof(struct node));
+			  		   //tmp = malloc(sizeof(struct node));
+			  		    if(current){
+			  		      	    current->count = 0;
+			  		      	    current->word = strdup(word);
+			  		      	    current->next = result;
+			  		      	    list[hash_code] =current;
+
+			  		      	    return current;
+
+			  		    }
+			  		      	 return NULL;
 
 #ifdef WITH_UTHASH
-  		/* TODO: Hash kodu */
 
+  		/* TODO: Hash kodu */
 
 
 
@@ -62,7 +81,9 @@ struct node* add_word(struct node **list, char *word) {
 //      	      		new_node->word=strdup(word);
 //      	      		new_node->next = list;
 //      	      		list = new_node;
+////		  		     	free(new_node);
 //      	      	}
+
 #endif
       	      	return list;
 

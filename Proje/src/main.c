@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
     	if(yeni_fark < fark){
     		fark = yeni_fark;
     		best_author = m;
-    		printf("%s\n",authors[m]->author);
+    		//printf("%s\n",authors[m]->author);
 			best_score=yeni_fark;
     	}
     }
@@ -126,6 +126,7 @@ int main(int argc, char *argv[]) {
     free(file_data);
     free_signatures(authors);
     free(authors);
+
 
     return 1;
 }

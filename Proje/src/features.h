@@ -6,4 +6,5 @@
 void cleanup(char *s);
 double sim_score(struct features *s1, struct features *s2);
 void compute_features(char *text, struct features *feat);
+
 #endif

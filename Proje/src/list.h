@@ -21,7 +21,7 @@ struct node {
 };
 
 unsigned long hash_compute(const char* str);
-
+void hash_free(struct node** table);
 struct node* add_word(struct node **list, char *word);
 
 #endif

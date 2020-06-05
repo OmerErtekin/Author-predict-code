@@ -42,6 +42,7 @@ void cleanup(char *s) {
  //   s = strtok(s,"!\"',;:.- ?)(_[]<>*#\n\t\r");
 }
 
+
 /* TODO: iki imza arasindaki benzerligi hesaplayan fonksiyon. */
 double sim_score(struct features *s1, struct features *s2) {
 	    double sim_score=0;
@@ -69,15 +70,17 @@ void compute_features(char *text, struct features *feat) {
 	float compl;
 	int cumle_sayisi = 0;
 	int parcacik_sayisi = 0;
-	char* wordpoint[25];
 
 
-	char* word[25];
+
+	  char* wordpoint[25];
+		char* word[25];
 		struct node* hash_table[TABLO];
 		struct node* hash_tablepoint[TABLO];
 		memset(hash_table,0,sizeof(hash_table));
 		memset(hash_tablepoint,0,sizeof(hash_tablepoint));
 		struct node* w = NULL;
+
 		struct node* w2 = NULL;
 		char * noktasiz_text = text;
 		while(1){
@@ -136,6 +139,7 @@ void compute_features(char *text, struct features *feat) {
 
 
 
+
 			}
 
 
@@ -143,12 +147,14 @@ void compute_features(char *text, struct features *feat) {
 
 				for(int m  = 0 ;m<TABLO;m++){
 						while(hash_table[m] != NULL){
-			//				printf("%s = ",hash_table[m]->word);
-			//				printf("%d\n",hash_table[m]->count);
+//							printf("%s = ",hash_table[m]->word);
+//							printf("%d\n",hash_table[m]->count);
 
 							//features hesapları
 							farkli_kelime++;
-							if(hash_table[m]->count == 1) bir_defa_gecen++;
+							if(hash_table[m]->count == 1){
+								bir_defa_gecen++;
+							}
 							unsigned long v1 = strlen(hash_table[m]->word);
 							unsigned long v2 = hash_table[m]->count;
 
@@ -160,20 +166,16 @@ void compute_features(char *text, struct features *feat) {
 
 							}
 						}
-				}
-			//
-		    for(int j = 0;j<TABLO;j++){
-		    	free(hash_table[j]);
-		    	free(hash_tablepoint[j]);
-		    }
 
+				}
+
+				hash_free(hash_table);
+				hash_free(hash_tablepoint);
 
 
 
 
 #ifdef WITH_UTHASH
-
-
 
 
 #else
@@ -213,6 +215,14 @@ void compute_features(char *text, struct features *feat) {
 //
 //
 //		}
+//		free(segment1);
+//		free(segment2);
+//		free(segment3);
+//		free(copy1);
+//		free(copy2);
+//		free(copy3);
+
+
 #endif
     
     /* TODO: Ortak kod. feat yapisinin uyelerini artik doldurabilirsiniz. */
